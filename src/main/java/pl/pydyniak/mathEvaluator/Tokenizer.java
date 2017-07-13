@@ -6,7 +6,7 @@ import java.util.List;
 class Tokenizer {
     private int currentExpressionPosition;
 
-    public List<Token> tokenizeExpression(String expression) {
+    List<Token> tokenizeExpression(String expression) {
         expression = expression.trim();
         List<Token> tokens = new ArrayList<>();
         Token previousToken = null;
@@ -28,17 +28,17 @@ class Tokenizer {
             String number = getWholeNumber(expression);
             return new Token(TokenType.INTEGER, number);
         } else if (currentChar == '+') {
-            return new Token(TokenType.PLUS, String.valueOf(currentChar));
+            return new Token(TokenType.PLUS);
         } else if (currentChar == '-') {
             return returnSubstractOrUnaryMinusToken(expression, currentChar, previousToken);
         } else if (currentChar == '/') {
-            return new Token(TokenType.DIVIDE, String.valueOf(currentChar));
+            return new Token(TokenType.DIVIDE);
         } else if (currentChar == '*') {
-            return new Token(TokenType.MULTIPLY, String.valueOf(currentChar));
+            return new Token(TokenType.MULTIPLY);
         } else if (currentChar == '(') {
-            return new Token(TokenType.LEFT_PARENTHESIS, String.valueOf(currentChar));
+            return new Token(TokenType.LEFT_PARENTHESIS);
         } else if (currentChar == ')') {
-            return new Token(TokenType.RIGHT_PARENTHESIS, String.valueOf(currentChar));
+            return new Token(TokenType.RIGHT_PARENTHESIS);
         } else {
             throw new UnsupportedOperationException();
         }
@@ -46,9 +46,9 @@ class Tokenizer {
 
     private Token returnSubstractOrUnaryMinusToken(String expression, char currentChar, Token previousToken) {
         if (isUnaryMinus(expression, previousToken)) {
-            return new Token(TokenType.MINUS_UNARY, String.valueOf('#'));
+            return new Token(TokenType.MINUS_UNARY);
         } else {
-            return new Token(TokenType.SUBSTRACT, String.valueOf(currentChar));
+            return new Token(TokenType.SUBSTRACT);
         }
     }
 

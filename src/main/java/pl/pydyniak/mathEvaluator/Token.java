@@ -1,19 +1,46 @@
 package pl.pydyniak.mathEvaluator;
 
+import static pl.pydyniak.mathEvaluator.TokenType.*;
+
 class Token {
     private TokenType tokenType;
     private String value;
 
-    public Token(TokenType tokenType, String value) {
+    Token(TokenType tokenType) {
+        this(tokenType, getValueBasedOnTokenType(tokenType));
+    }
+
+    private static String getValueBasedOnTokenType(TokenType tokenType) {
+        switch(tokenType) {
+            case PLUS:
+                return "+";
+            case SUBSTRACT:
+                return "-";
+            case MULTIPLY:
+                return "*";
+            case DIVIDE:
+                return "/";
+            case MINUS_UNARY:
+                return "#";
+            case LEFT_PARENTHESIS:
+                return "(";
+            case RIGHT_PARENTHESIS:
+                return ")";
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
+
+    Token(TokenType tokenType, String value) {
         this.tokenType = tokenType;
         this.value = value;
     }
 
-    public TokenType getTokenType() {
+    TokenType getTokenType() {
         return tokenType;
     }
 
-    public String getValue() {
+    String getValue() {
         return value;
     }
 
