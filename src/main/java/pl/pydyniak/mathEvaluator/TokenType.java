@@ -5,6 +5,7 @@ enum TokenType {
     PLUS,
     MULTIPLY,
     DIVIDE,
+    MODULO,
     SUBSTRACT,
     LEFT_PARENTHESIS,
     RIGHT_PARENTHESIS,
@@ -12,13 +13,14 @@ enum TokenType {
 
 
     public boolean isOperator() {
-        return equals(PLUS) || equals(DIVIDE) || equals(SUBSTRACT) || equals(MULTIPLY) || equals(MINUS_UNARY);
+        return equals(PLUS) || equals(DIVIDE) || equals(SUBSTRACT) || equals(MULTIPLY) ||
+                equals(MINUS_UNARY) || equals(MODULO);
     }
 
     public int getPrecedence() {
         if (equals(PLUS) || equals(SUBSTRACT)) {
             return 1;
-        } else if (equals(MULTIPLY) || equals(DIVIDE)) {
+        } else if (equals(MULTIPLY) || equals(DIVIDE) || equals(MODULO)) {
             return 2;
         } else if (equals(MINUS_UNARY)) {
             return 3;

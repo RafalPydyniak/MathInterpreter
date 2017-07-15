@@ -39,7 +39,7 @@ class RpnEvaluator {
         }
 
         String result = output.stream().map(Token::getValue).collect(Collectors.joining(" "));
-        System.out.printf("RPN: " + result);
+        System.out.println("RPN: " + result);
         return result;
     }
 
@@ -97,6 +97,11 @@ class RpnEvaluator {
             case "#":
                 a = stack.pop();
                 stack.push(-a);
+                break;
+            case "%":
+                a = stack.pop();
+                b = stack.pop();
+                stack.push(b%a);
             default:
                 //Should not happen according to instructions
                 break;

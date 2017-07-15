@@ -91,4 +91,10 @@ public class MathRpnEvaluatorTest {
     public void shouldWorkWithMinusLookingLikeUnaryButBeingBinary() {
         assertEquals(1, new MathEvaluator().calculate("2 -1"), 0.01);
     }
+
+    @Test
+    public void shouldWorkWithModulo() {
+        assertEquals(3, new MathEvaluator().calculate("11 % 4"), 0.01);
+    }
+
 }

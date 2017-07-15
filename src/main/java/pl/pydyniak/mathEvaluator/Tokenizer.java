@@ -39,6 +39,8 @@ class Tokenizer {
             return new Token(TokenType.LEFT_PARENTHESIS);
         } else if (currentChar == ')') {
             return new Token(TokenType.RIGHT_PARENTHESIS);
+        } else if (currentChar == '%') {
+            return new Token(TokenType.MODULO);
         } else {
             throw new UnsupportedOperationException();
         }

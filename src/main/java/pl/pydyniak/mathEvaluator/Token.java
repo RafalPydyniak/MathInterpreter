@@ -26,6 +26,8 @@ class Token {
                 return "(";
             case RIGHT_PARENTHESIS:
                 return ")";
+            case MODULO:
+                return "%";
             default:
                 throw new UnsupportedOperationException();
         }
