@@ -1,30 +1,29 @@
 package pl.pydyniak.mathEvaluator;
 
 enum TokenType {
-    INTEGER,
-    PLUS,
-    MULTIPLY,
-    DIVIDE,
-    MODULO,
-    SUBSTRACT,
-    LEFT_PARENTHESIS,
-    RIGHT_PARENTHESIS,
-    MINUS_UNARY; //# is sign for unary minus
+    INTEGER(false, 0),
+    PLUS(true, 1),
+    MULTIPLY(true, 2),
+    DIVIDE(true, 2),
+    MODULO(true, 2),
+    SUBSTRACT(true, 1),
+    LEFT_PARENTHESIS(false, 0),
+    RIGHT_PARENTHESIS(false, 0),
+    MINUS_UNARY(true, 3); //# is sign for unary minus
+
+    private boolean operator;
+    private int precedence;
+    TokenType(boolean operator, int precedence) {
+        this.operator = operator;
+        this.precedence = precedence;
+    }
 
 
     public boolean isOperator() {
-        return equals(PLUS) || equals(DIVIDE) || equals(SUBSTRACT) || equals(MULTIPLY) ||
-                equals(MINUS_UNARY) || equals(MODULO);
+        return operator;
     }
 
     public int getPrecedence() {
-        if (equals(PLUS) || equals(SUBSTRACT)) {
-            return 1;
-        } else if (equals(MULTIPLY) || equals(DIVIDE) || equals(MODULO)) {
-            return 2;
-        } else if (equals(MINUS_UNARY)) {
-            return 3;
-        }
-        return 0;
+        return precedence;
     }
 }
