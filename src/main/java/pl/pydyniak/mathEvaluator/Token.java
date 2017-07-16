@@ -1,7 +1,5 @@
 package pl.pydyniak.mathEvaluator;
 
-import static pl.pydyniak.mathEvaluator.TokenType.*;
-
 class Token {
     private TokenType tokenType;
     private String value;

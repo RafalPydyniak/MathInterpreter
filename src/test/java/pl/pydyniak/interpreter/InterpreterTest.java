@@ -1,5 +1,6 @@
 package pl.pydyniak.interpreter;
 import org.junit.Test;
+import pl.pydyniak.exceptions.NoSuchVariableException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -35,6 +36,27 @@ public class InterpreterTest {
         } catch (Exception e) {
             // Ok
         }
+    }
+
+    @Test(expected = NoSuchVariableException.class)
+    public void shouldThrowNoSuchVariableException() {
+        Interpreter interpreter = new Interpreter();
+        interpreter.input("t");
+    }
+
+    @Test(expected = NoSuchVariableException.class)
+    public void shouldThrowNoSuchVariableExceptionEvenifOneOfVariblesExists() {
+        Interpreter interpreter = new Interpreter();
+        interpreter.input("x = 1");
+        interpreter.input("x + t");
+    }
+
+    @Test
+    public void shouldExistingVariablesBeUsedWhenCalculattingOtherVariable() {
+        Interpreter interpreter = new Interpreter();
+        interpreter.input("x = 1");
+        assertEquals(4, interpreter.input("t = x+3"), 0.01);
+        assertEquals(4, interpreter.input("t"), 0.01);
     }
 }
 

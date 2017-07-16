@@ -18,7 +18,6 @@ enum TokenType {
         this.precedence = precedence;
     }
 
-
     public boolean isOperator() {
         return operator;
     }
