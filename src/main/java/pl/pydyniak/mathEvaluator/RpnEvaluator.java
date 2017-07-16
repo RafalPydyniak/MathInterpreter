@@ -1,5 +1,7 @@
 package pl.pydyniak.mathEvaluator;
 
+import pl.pydyniak.exceptions.WrongExpressionException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,18 +49,20 @@ class RpnEvaluator {
         return first.getTokenType().getPrecedence() >= second.getTokenType().getPrecedence();
     }
 
-    private double evaluateRPNExpression(String rpnExpression) {
+    private Double evaluateRPNExpression(String rpnExpression) {
         if ("".equals(rpnExpression)) {
             return 0.0;
         }
 
         List<String> tokens = Arrays.stream(rpnExpression.split(" ")).collect(Collectors.toList());
         Stack<Double> stack = new Stack<>();
-
         tokens.forEach(token -> {
             evaluateToken(token, stack);
         });
 
+        if (stack.size()>1) {
+            throw new WrongExpressionException();
+        }
         return stack.pop();
     }
 

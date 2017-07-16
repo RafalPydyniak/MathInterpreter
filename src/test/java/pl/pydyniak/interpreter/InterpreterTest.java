@@ -58,5 +58,11 @@ public class InterpreterTest {
         assertEquals(4, interpreter.input("t = x+3"), 0.01);
         assertEquals(4, interpreter.input("t"), 0.01);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionForIncorrectExpression() {
+        Interpreter interpreter = new Interpreter();
+        interpreter.input("1 2");
+    }
 }
 

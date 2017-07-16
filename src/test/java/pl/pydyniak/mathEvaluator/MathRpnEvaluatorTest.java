@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class MathRpnEvaluatorTest {
@@ -97,4 +98,9 @@ public class MathRpnEvaluatorTest {
         assertEquals(3, new MathEvaluator().calculate("11 % 4"), 0.01);
     }
 
+
+    @Test
+    public void shouldReturnNullForEmptyInput() {
+        assertNull(new MathEvaluator().calculate("  "));
+    }
 }

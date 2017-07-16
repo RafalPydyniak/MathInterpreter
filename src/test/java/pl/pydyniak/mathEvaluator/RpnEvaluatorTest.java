@@ -20,4 +20,5 @@ public class RpnEvaluatorTest {
                 new RpnEvaluator().evaluate(Arrays.asList(new Token(TokenType.INTEGER, "2"), new Token(TokenType.PLUS, "+"),
                         new Token(TokenType.INTEGER, "3"))), 0.01);
     }
+
 }

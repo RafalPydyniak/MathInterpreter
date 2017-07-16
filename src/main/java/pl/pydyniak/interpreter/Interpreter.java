@@ -30,6 +30,7 @@ public class Interpreter {
         }
     }
 
+
     private Double assignToVariable(MathEvaluator mathEvaluator, Matcher matcher) {
         String variable = matcher.group(1);
         String expression = matcher.group(2);
