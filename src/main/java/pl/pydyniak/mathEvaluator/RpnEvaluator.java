@@ -41,7 +41,6 @@ class RpnEvaluator {
         }
 
         String result = output.stream().map(Token::getValue).collect(Collectors.joining(" "));
-        System.out.println("RPN: " + result);
         return result;
     }
 

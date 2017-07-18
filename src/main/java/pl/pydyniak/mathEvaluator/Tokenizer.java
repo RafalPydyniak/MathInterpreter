@@ -30,7 +30,7 @@ class Tokenizer {
         } else if (currentChar == '+') {
             return new Token(TokenType.PLUS);
         } else if (currentChar == '-') {
-            return returnSubstractOrUnaryMinusToken(expression, currentChar, previousToken);
+            return returnSubstractOrUnaryMinusToken(expression, previousToken);
         } else if (currentChar == '/') {
             return new Token(TokenType.DIVIDE);
         } else if (currentChar == '*') {
@@ -46,7 +46,7 @@ class Tokenizer {
         }
     }
 
-    private Token returnSubstractOrUnaryMinusToken(String expression, char currentChar, Token previousToken) {
+    private Token returnSubstractOrUnaryMinusToken(String expression, Token previousToken) {
         if (isUnaryMinus(expression, previousToken)) {
             return new Token(TokenType.MINUS_UNARY);
         } else {
