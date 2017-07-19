@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 public class MathRpnEvaluatorTest {
     @Test
     public void testAddition() {
-        assertEquals(2d, new MathEvaluator().calculate("1+1"), 0.01);
+        assertEquals(2.0, new MathEvaluator().calculate("1+1"), 0.01);
     }
 
     @Test
@@ -25,7 +25,7 @@ public class MathRpnEvaluatorTest {
 
     @Test
     public void testMultiplication() {
-        assertEquals(1d, new MathEvaluator().calculate("1* 1"), 0.01);
+        assertEquals(1.0, new MathEvaluator().calculate("1* 1"), 0.01);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class MathRpnEvaluatorTest {
 
     @Test
     public void shouldWorkWithSomeMoreComplexWithUnaryMinus() {
-        assertEquals(-492, new MathEvaluator().calculate("12* 123/(-5 + 2)"), 0.01);
+        assertEquals(-492.0, new MathEvaluator().calculate("12* 123/(-5 + 2)"), 0.01);
     }
 
     @Test
@@ -90,12 +90,12 @@ public class MathRpnEvaluatorTest {
 
     @Test
     public void shouldWorkWithMinusLookingLikeUnaryButBeingBinary() {
-        assertEquals(1, new MathEvaluator().calculate("2 -1"), 0.01);
+        assertEquals(1.0, new MathEvaluator().calculate("2 -1"), 0.01);
     }
 
     @Test
     public void shouldWorkWithModulo() {
-        assertEquals(3, new MathEvaluator().calculate("11 % 4"), 0.01);
+        assertEquals(3.0, new MathEvaluator().calculate("11 % 4"), 0.01);
     }
 
 

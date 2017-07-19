@@ -1,5 +1,6 @@
 package pl.pydyniak.interpreter;
 import org.junit.Test;
+import pl.pydyniak.exceptions.InvalidBodyException;
 import pl.pydyniak.exceptions.NoSuchVariableException;
 import pl.pydyniak.exceptions.WrongExpressionException;
 
@@ -13,7 +14,7 @@ import static org.junit.Assert.fail;
 public class InterpreterTest {
 
     @Test
-    public void basicTests() {
+    public void basicTests() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
 
         // Basic arithmetic
@@ -51,20 +52,20 @@ public class InterpreterTest {
     }
 
     @Test(expected = NoSuchVariableException.class)
-    public void shouldThrowNoSuchVariableException() {
+    public void shouldThrowNoSuchVariableException() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         interpreter.input("t");
     }
 
     @Test(expected = NoSuchVariableException.class)
-    public void shouldThrowNoSuchVariableExceptionEvenifOneOfVariblesExists() {
+    public void shouldThrowNoSuchVariableExceptionEvenifOneOfVariblesExists() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         interpreter.input("x = 1");
         interpreter.input("x + t");
     }
 
     @Test
-    public void shouldExistingVariablesBeUsedWhenCalculattingOtherVariable() {
+    public void shouldExistingVariablesBeUsedWhenCalculattingOtherVariable() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         interpreter.input("x = 1");
         assertEquals(4.0, interpreter.input("t = x+3"), 0.01);
@@ -72,13 +73,13 @@ public class InterpreterTest {
     }
 
     @Test(expected = WrongExpressionException.class)
-    public void shouldThrowExceptionForIncorrectExpression() {
+    public void shouldThrowExceptionForIncorrectExpression() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         interpreter.input("1 2");
     }
 
     @Test
-    public void shouldWorkWithDifferentSpacesNumberBetweenVariableAndEquals() {
+    public void shouldWorkWithDifferentSpacesNumberBetweenVariableAndEquals() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         assertEquals(3.0, interpreter.input("x=3"), 0.01);
         assertEquals(2.0, interpreter.input("y   =2"), 0.01);
@@ -86,7 +87,7 @@ public class InterpreterTest {
     }
 
     @Test
-    public void shouldWorkWithSimpleNestedAssignment() {
+    public void shouldWorkWithSimpleNestedAssignment() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         assertEquals(3.0, interpreter.input("x=y=3"), 0.01);
         assertEquals(3.0, interpreter.input("x"), 0.01);
@@ -94,7 +95,7 @@ public class InterpreterTest {
     }
 
     @Test
-    public void shouldWorkWithMultipleNestedAssignments() {
+    public void shouldWorkWithMultipleNestedAssignments() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         assertEquals(3.0, interpreter.input("x = y = z = 3"), 0.01);
         assertEquals(3.0, interpreter.input("x"), 0.01);
@@ -103,28 +104,28 @@ public class InterpreterTest {
     }
 
     @Test
-    public void shouldWorkWithAssignmentInExpression() {
+    public void shouldWorkWithAssignmentInExpression() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         assertEquals(3.0, interpreter.input("1 + (y=2)"), 0.01);
     }
 
     @Test
-    public void shouldWorkWithAssignemntInAddExpression() {
+    public void shouldWorkWithAssignemntInAddExpression() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         assertEquals(16.0, interpreter.input("x = 13+ (y=3)"), 0.01);
     }
 
     @Test
-    public void shouldSimpleFunctionWork() {
+    public void shouldSimpleFunctionWork() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         interpreter.input("fn incr x => x + 1");
         interpreter.input("a = 0");
         interpreter.input("a = incr a");
-        assertEquals(1, interpreter.input("a"), 0.01);
+        assertEquals(1.0, interpreter.input("a"), 0.01);
     }
 
     @Test
-    public void shouldWorkWithFunctionWithTwoArguments() {
+    public void shouldWorkWithFunctionWithTwoArguments() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         interpreter.input("fn add x y => x+y");
         interpreter.input("a = 4");
@@ -133,7 +134,7 @@ public class InterpreterTest {
     }
 
     @Test
-    public void moreFunctions() {
+    public void moreFunctions() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         interpreter.input("x = 23");
         interpreter.input("y = 25");
@@ -150,11 +151,12 @@ public class InterpreterTest {
     }
 
     @Test
-    public void emptyInputTest() {
+    public void emptyInputTest() throws InvalidBodyException {
         Interpreter interpreter = new Interpreter();
         assertNull(interpreter.input(" "));
         assertNull(interpreter.input("   "));
 
     }
+
 }
 

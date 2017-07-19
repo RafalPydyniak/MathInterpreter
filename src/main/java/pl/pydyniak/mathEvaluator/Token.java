@@ -9,7 +9,7 @@ class Token {
     }
 
     private static String getValueBasedOnTokenType(TokenType tokenType) {
-        switch(tokenType) {
+        switch (tokenType) {
             case PLUS:
                 return "+";
             case SUBSTRACT:

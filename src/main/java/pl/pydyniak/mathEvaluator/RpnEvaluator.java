@@ -18,30 +18,33 @@ class RpnEvaluator {
         List<Token> output = new ArrayList<>();
         Stack<Token> operators = new Stack<>();
         for (Token token : tokens) {
-            if (token.getTokenType().isOperator()) {
-                while (!operators.isEmpty() && isHigherOrEqualPrecedence(operators.peek(), token)) {
-                    Token topOperator = operators.pop();
-                    output.add(topOperator);
-                }
-                operators.push(token);
-            } else if (token.getTokenType() == TokenType.INTEGER) {
-                output.add(token);
-            } else if (token.getTokenType() == TokenType.LEFT_PARENTHESIS) {
-                operators.push(token);
-            } else if (token.getTokenType() == TokenType.RIGHT_PARENTHESIS) {
-                while (operators.peek().getTokenType() != TokenType.LEFT_PARENTHESIS) {
-                    output.add(operators.pop());
-                }
-                operators.pop();
-            }
+            handleToken(output, operators, token);
         }
 
         while (!operators.isEmpty()) {
             output.add(operators.pop());
         }
 
-        String result = output.stream().map(Token::getValue).collect(Collectors.joining(" "));
-        return result;
+        return output.stream().map(Token::getValue).collect(Collectors.joining(" "));
+    }
+
+    private void handleToken(List<Token> output, Stack<Token> operators, Token token) {
+        if (token.getTokenType().isOperator()) {
+            while (!operators.isEmpty() && isHigherOrEqualPrecedence(operators.peek(), token)) {
+                Token topOperator = operators.pop();
+                output.add(topOperator);
+            }
+            operators.push(token);
+        } else if (token.getTokenType() == TokenType.INTEGER) {
+            output.add(token);
+        } else if (token.getTokenType() == TokenType.LEFT_PARENTHESIS) {
+            operators.push(token);
+        } else if (token.getTokenType() == TokenType.RIGHT_PARENTHESIS) {
+            while (operators.peek().getTokenType() != TokenType.LEFT_PARENTHESIS) {
+                output.add(operators.pop());
+            }
+            operators.pop();
+        }
     }
 
     private boolean isHigherOrEqualPrecedence(Token first, Token second) {
@@ -59,7 +62,7 @@ class RpnEvaluator {
             evaluateToken(token, stack);
         });
 
-        if (stack.size()>1) {
+        if (stack.size() > 1) {
             throw new WrongExpressionException();
         }
         return stack.pop();
@@ -104,10 +107,10 @@ class RpnEvaluator {
             case "%":
                 a = stack.pop();
                 b = stack.pop();
-                stack.push(b%a);
-            default:
-                //Should not happen according to instructions
+                stack.push(b % a);
                 break;
+            default:
+                throw new UnsupportedOperationException();
         }
     }
 

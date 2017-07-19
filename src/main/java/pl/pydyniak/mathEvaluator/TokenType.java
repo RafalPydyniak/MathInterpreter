@@ -13,6 +13,7 @@ enum TokenType {
 
     private boolean operator;
     private int precedence;
+
     TokenType(boolean operator, int precedence) {
         this.operator = operator;
         this.precedence = precedence;
