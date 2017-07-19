@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by pydyra on 17.07.2017.
  */
-public class Function {
+class Function {
     private List<String> parameters;
     private String body;
 

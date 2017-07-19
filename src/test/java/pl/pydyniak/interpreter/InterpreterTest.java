@@ -4,6 +4,7 @@ import pl.pydyniak.exceptions.NoSuchVariableException;
 import pl.pydyniak.exceptions.WrongExpressionException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 /**
@@ -28,6 +29,16 @@ public class InterpreterTest {
         assertEquals(1.0, interpreter.input("x"), 0.0);
         assertEquals(4.0, interpreter.input("x + 3"), 0.0);
         assertFail("input: 'y'", () -> interpreter.input("y"));
+
+        // Functions
+        interpreter.input("fn avg x y => (x + y) / 2");
+        assertEquals(3, interpreter.input("avg 4 2"), 0.0);
+        assertFail("input: 'avg 7'", () -> interpreter.input("avg 7"));
+        assertFail("input: 'avg 7 2 4'", () -> interpreter.input("avg 7 2 4"));
+
+        // Conflicts
+        assertFail("input: 'fn x => 0'", () -> interpreter.input("fn x => 0"));
+        assertFail("input: 'avg = 5'", () -> interpreter.input("avg = 5"));
     }
 
     private static void assertFail(String msg, Runnable runnable) {
@@ -91,13 +102,13 @@ public class InterpreterTest {
         assertEquals(3.0, interpreter.input("z"), 0.01);
     }
 
-//    @Test
+    @Test
     public void shouldWorkWithAssignmentInExpression() {
         Interpreter interpreter = new Interpreter();
         assertEquals(3.0, interpreter.input("1 + (y=2)"), 0.01);
     }
 
-//    @Test
+    @Test
     public void shouldWorkWithAssignemntInAddExpression() {
         Interpreter interpreter = new Interpreter();
         assertEquals(16.0, interpreter.input("x = 13+ (y=3)"), 0.01);
@@ -119,6 +130,31 @@ public class InterpreterTest {
         interpreter.input("a = 4");
         interpreter.input("b = 3");
         assertEquals(7.0, interpreter.input("add a b"), 0.01);
+    }
+
+    @Test
+    public void moreFunctions() {
+        Interpreter interpreter = new Interpreter();
+        interpreter.input("x = 23");
+        interpreter.input("y = 25");
+        interpreter.input("z = 0");
+        interpreter.input("fn one => 1");
+        interpreter.input("fn avg x y => (x + y) / 2");
+        interpreter.input("fn echo x => x");
+        assertFail("fn add x y => x + z", () -> interpreter.input("fn add x y => x + z"));
+        assertFail("fn add x x => x + x", () -> interpreter.input("fn add x x => x + x"));
+        assertFail("(fn f => 1)", () -> interpreter.input("(fn f => 1)"));
+        assertFail("fn", () -> interpreter.input("fn"));
+        assertEquals(1.0, interpreter.input("one"), 0.01);
+        assertEquals(3.0, interpreter.input("avg echo 4 echo 2"), 0.01);
+    }
+
+    @Test
+    public void emptyInputTest() {
+        Interpreter interpreter = new Interpreter();
+        assertNull(interpreter.input(" "));
+        assertNull(interpreter.input("   "));
+
     }
 }
 
